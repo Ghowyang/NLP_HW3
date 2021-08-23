@@ -72,3 +72,9 @@ def knn(X,Y):
     y_test=y_test.values
 
     print("精準度：",metrics.accuracy_score(y_test, y_pred))
+
+df = pd.read_csv('movie.csv')
+df = df.drop(labels=['Unnamed: 0'],axis='columns')
+df1 = cutval(df) 
+tf = count(df1)
+knn(tf,df1)
