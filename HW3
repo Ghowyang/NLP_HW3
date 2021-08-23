@@ -26,3 +26,30 @@ def cutval(df):
         ch =re.compile("[\u4e00-\u9fa5]")
         name =  "".join(ch.findall(i))
         namecut.append(name)
+        
+    def cutval(df):
+    topcut = []
+    for i in df['簡介']:
+        top = jieba.analyse.extract_tags(i,topK=2)
+        topcut.append(top)
+
+    typecut = []
+    for i in df['類型']:
+        ch =re.compile("[\u4e00-\u9fa5]")
+        seg_word =  "".join(ch.findall(i))
+        top = jieba.lcut(seg_word)
+        typecut.append(top)
+
+    namecut = []
+    for i in df['中文名稱']:
+        ch =re.compile("[\u4e00-\u9fa5]")
+        name =  "".join(ch.findall(i))
+        namecut.append(name)
+
+    data = { 'type':typecut ,'name':namecut,'article':topcut}
+    df1 = pd.DataFrame(data)
+
+    df1['type'] = df1['type'].apply(lambda x :  str(x)[1:-2].replace("'","").replace(",",""))
+    df1['article'] = df1['article'].apply(lambda x :  str(x)[1:-2].replace("'","").replace(",",""))
+    df1['key'] = df1['name'].astype(str)+' '+df1['type'].astype(str)+' '+df1['article'].astype(str)
+    return df1
