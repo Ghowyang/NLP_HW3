@@ -62,3 +62,13 @@ def count(df):
     word = vectorizer.get_feature_names() #詞袋 
     
     return tf
+
+def knn(X,Y):
+    X_train, X_test, y_train, y_test = train_test_split(X, Y
+    clf=KNeighborsClassifier(n_neighbors=51)
+    clf.fit(X_train,y_train)
+
+    y_pred = clf.predict(X_test)    # 預測模型 
+    y_test=y_test.values
+
+    print("精準度：",metrics.accuracy_score(y_test, y_pred))
