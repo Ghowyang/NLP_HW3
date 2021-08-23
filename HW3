@@ -1,0 +1,28 @@
+import re
+import pandas as pd
+from sklearn.feature_extraction.text import CountVectorizer
+import jieba
+import jieba.analyse
+from sklearn.feature_extraction.text import TfidfTransformer
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn import metrics
+from sklearn.model_selection import train_test_split
+
+def cutval(df):
+    topcut = []
+    for i in df['簡介']:
+        top = jieba.analyse.extract_tags(i,topK=2)
+        topcut.append(top)
+
+    typecut = []
+    for i in df['類型']:
+        ch =re.compile("[\u4e00-\u9fa5]")
+        seg_word =  "".join(ch.findall(i))
+        top = jieba.lcut(seg_word)
+        typecut.append(top)
+
+    namecut = []
+    for i in df['中文名稱']:
+        ch =re.compile("[\u4e00-\u9fa5]")
+        name =  "".join(ch.findall(i))
+        namecut.append(name)
