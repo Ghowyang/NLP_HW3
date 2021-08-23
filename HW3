@@ -53,3 +53,12 @@ def cutval(df):
     df1['article'] = df1['article'].apply(lambda x :  str(x)[1:-2].replace("'","").replace(",",""))
     df1['key'] = df1['name'].astype(str)+' '+df1['type'].astype(str)+' '+df1['article'].astype(str)
     return df1
+    
+def count(df):
+    vectorizer = CountVectorizer()
+    X = vectorizer.fit_transform(df['key'])
+    tfidf = TfidfTransformer() 
+    tf=tfidf.fit_transform(X)
+    word = vectorizer.get_feature_names() #詞袋 
+    
+    return tf
